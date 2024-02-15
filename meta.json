@@ -1,0 +1,17 @@
+{
+  "module_id": "naomi:sync-at-time",
+  "visibility": "public",
+  "url": "https://github.com/viam-labs/sync-at-time",
+  "description": "This module allows you to trigger cloud sync only during a configured time frame.",
+  "models": [
+    {
+      "api": "rdk:component:sensor",
+      "model": "naomi:sync-at-time:timesyncsensor"
+    }
+  ],
+  "entrypoint": "syncattime",
+  "build": {
+    "build": "make module.tar.gz",
+    "arch" : ["linux/amd64", "linux/arm64", "darwin/arm64"]
+  }
+}
