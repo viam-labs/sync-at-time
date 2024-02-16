@@ -4,7 +4,7 @@ This module allows you to configure Cloud Sync to occur only at a specific time 
 
 ## Requirements
 
-Before configuring your sensor, you must [create a machine](https://docs.viam.com/manage/fleet/machines/#add-a-new-machine).
+Before configuring your sensor, you must [create a machine](https://docs.viam.com/fleet/machines/#add-a-new-machine).
 
 To use the `sync-at-time` module you also need to:
 
@@ -75,11 +75,13 @@ On your machine's **Config** tab, switch to **JSON** mode and add a `selective_s
 }
 ```
 
+For an example configuration see [example.json](./example.json).
+
 ### Next steps
 
-You have now configured sync to happen at a specific time slot.
+You have now configured sync to happen during a specific time slot.
 To test your setup, [configure a webcam](https://docs.viam.com/components/camera/webcam/) or another component and [enable data capture on one of the component methods](https://docs.viam.com/data/capture/#configure-data-capture-for-individual-components), for example `ReadImage`.
-Data will now be captured.
+The data manager will now capture data.
 Go to the [**Control** tab](https://docs.viam.com/fleet/machines/#control). You should see the sensor.
 Click on `GetReadings`.
 If you are in the time frame for sync, the sensor will return true.
