@@ -27,7 +27,7 @@ func init() {
             Constructor: func(ctx context.Context, deps resource.Dependencies, conf resource.Config, logger logging.Logger) (sensor.Sensor, error) {
                 sensorConfig, err := resource.NativeConfig[*Config](conf)
                 if err != nil {
-                    logger.Warnf("Error configuring module with %+s", err)
+                    logger.Warn("Error configuring module with ", err)
                     return nil, err
                 }
 
@@ -43,7 +43,7 @@ func init() {
                     cancelFunc: cancelFunc,
                 }
                 if err := v.Reconfigure(ctx, deps, conf); err != nil {
-                    logger.Warnf("Error configuring module with %+s", err)
+                    logger.Warn("Error configuring module with ", err)
                     return nil, err
                 }
                 return v, nil
@@ -93,15 +93,15 @@ func (s *timeSyncer) Name() resource.Name {
 func (s *timeSyncer) Reconfigure(ctx context.Context, deps resource.Dependencies, conf resource.Config) error {
     sensorConfig, err := resource.NativeConfig[*Config](conf)
     if err != nil {
-        s.logger.Warnf("Error reconfiguring module with %+s", err)
+        s.logger.Warn("Error reconfiguring module with ", err)
         return nil
     }
 
     s.start = sensorConfig.Start
     s.end = sensorConfig.End
 	s.name = conf.ResourceName()
-    s.logger.Info("Start time for sync now: %+s", s.start)
-    s.logger.Info("End time for sync now: %+s", s.end)
+    s.logger.Info("Start time for sync now: ", s.start)
+    s.logger.Info("End time for sync now: ", s.end)
 
     return nil
 }
@@ -127,7 +127,7 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
 
     zone, err := time.LoadLocation(s.zone)
     if err != nil {
-        s.logger.Error("Time zone cannot be loaded: %+s", s.zone)
+        s.logger.Error("Time zone cannot be loaded: ", s.zone)
     }
 
     startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
