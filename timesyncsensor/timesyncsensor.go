@@ -100,7 +100,8 @@ func (s *timeSyncer) Reconfigure(ctx context.Context, deps resource.Dependencies
     s.start = sensorConfig.Start
     s.end = sensorConfig.End
 	s.name = conf.ResourceName()
-    s.logger.Info("Start time and end time have changed to %s and %s.", s.start, s.end)
+    s.logger.Info("Start time for sync now: %+s", s.start)
+    s.logger.Info("End time for sync now: %+s", s.end)
 
     return nil
 }
@@ -126,7 +127,7 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
 
     zone, err := time.LoadLocation(s.zone)
     if err != nil {
-        s.logger.Error("Time zone %s cannot be loaded", s.zone)
+        s.logger.Error("Time zone cannot be loaded: %+s", s.zone)
     }
 
     startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),

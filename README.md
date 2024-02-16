@@ -19,8 +19,8 @@ To use this module, follow these instructions to [add a module from the Viam Reg
 
 Navigate to the **Config** tab of your machine's page in [the Viam app](https://app.viam.com/).
 Click on the **Components** subtab and click **Create component**.
-Select the `<INSERT API NAME>` type, then select the `<INSERT MODEL>` model.
-Enter a name for your <INSERT API NAME> and click **Create**.
+Select the `sensor` type, then select the `sync-at-time:timesyncsensor` model.
+Click **Add module**, then enter a name for your sensor and click **Create**.
 
 On the new component panel, copy and paste the following attribute template into your sensor’s **Attributes** box:
 
@@ -59,13 +59,13 @@ The following attributes are available for the `naomi:sync-at-time:timesyncsenso
 
 On your machine's **Config** tab, switch to **JSON** mode and add a `selective_syncer_name` with the name for the sensor you configured:
 
-```json {class="line-numbers linkable-line-numbers" data-line="6"}
+```json
 {
   "attributes": {
     "additional_sync_paths": [],
     "capture_dir": "",
     "capture_disabled": false,
-    "selective_syncer_name": "selective-syncer",
+    "selective_syncer_name": "<SENSOR-NAME>",
     "sync_disabled": false,
     "sync_interval_mins": 0.1,
     "tags": []
