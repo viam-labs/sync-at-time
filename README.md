@@ -77,11 +77,15 @@ On your machine's **Config** tab, switch to **JSON** mode and add a `selective_s
 
 ### Next steps
 
-_Add any additional information you want readers to know and direct them towards what to do next with this module._
-_For example:_
-
-- To test your...
-- To write code against your...
+You have now configured sync to happen at a specific time slot.
+To test your setup, [configure a webcam](https://docs.viam.com/components/camera/webcam/) or another component and [enable data capture on one of the component methods](https://docs.viam.com/data/capture/#configure-data-capture-for-individual-components), for example `ReadImage`.
+Data will now be captured.
+Go to the [**Control** tab](https://docs.viam.com/fleet/machines/#control). You should see the sensor.
+Click on `GetReadings`.
+If you are in the time frame for sync, the sensor will return true.
+You can confirm that no data is currently syncing by going to the [**Data** tab](https://app.viam.com/data/view).
+If you are not in the time frame for sync, adjust the configuration of your sensor.
+Then check again on the **Control** and **Data** tab to confirm data is syncing.
 
 ## Local Development
 
