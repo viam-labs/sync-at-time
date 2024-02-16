@@ -13,7 +13,7 @@ To use the `sync-at-time` module you also need to:
 
 ## Build and run
 
-To use this module, follow these instructions to [add a module from the Viam Registry](https://docs.viam.com/registry/configure/#add-a-modular-resource-from-the-viam-registry) and select the `naomi:sync-at-time:timesyncsensor` model from the [`sync-at-time` module](https://app.viam.com/module/<INSERT API NAMESPACE>/<INSERT MODEL>).
+To use this module, follow these instructions to [add a module from the Viam Registry](https://docs.viam.com/registry/configure/#add-a-modular-resource-from-the-viam-registry) and select the `naomi:sync-at-time:timesyncsensor` model from the [`sync-at-time` module](https://app.viam.com/module/naomi/sync-at-time).
 
 ## Configure your `sync-at-time` sensor
 
