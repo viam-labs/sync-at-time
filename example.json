@@ -36,7 +36,15 @@
       "name": "timesensor",
       "model": "naomi:sync-at-time:timesyncsensor",
       "type": "sensor",
-      "namespace": "rdk"
+      "namespace": "rdk",
+      "service_configs": [
+        {
+          "attributes": {
+            "capture_methods": []
+          },
+          "type": "data_manager"
+        }
+      ]
     }
   ],
   "services": [
