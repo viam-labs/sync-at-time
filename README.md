@@ -55,48 +55,11 @@ The following attributes are available for the `naomi:sync-at-time:timesyncsenso
 }
 ```
 
-To ensure the data manager starts up before the sensor, add this `service_config` to the component configuration on the **JSON** tab.
-
-```json
-"service_configs": [
-    {
-        "attributes": {
-        "capture_methods": []
-        },
-        "type": "data_manager"
-    }
-]
-```
-
-The entire component configuration should resemble this:
-
-```json
-{
-    "attributes": {
-    "start": "14:10:00",
-    "end": "15:35:00",
-    "zone": "CET"
-    },
-    "depends_on": [],
-    "name": "timesensor",
-    "model": "naomi:sync-at-time:timesyncsensor",
-    "type": "sensor",
-    "namespace": "rdk",
-    "service_configs": [
-    {
-        "attributes": {
-        "capture_methods": []
-        },
-        "type": "data_manager"
-    }
-    ]
-}
-```
-
+To ensure the sensor starts before the data manager, add the sensor to the dependencies of the data manager.
 
 ### Configure data manager
 
-On your machine's **Config** tab, switch to **JSON** mode and add a `selective_syncer_name` with the name for the sensor you configured:
+On your machine's **Config** tab, switch to **JSON** mode and add a `selective_syncer_name` with the name for the sensor you configured to the data manager config. Also add the sensor to the `depends_on` field:
 
 ```json
 {

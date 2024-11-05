@@ -115,14 +115,15 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
     currentTime := time.Now()
     var hStart, mStart, sStart, hEnd, mEnd, sEnd int
     n, err := fmt.Sscanf(s.start, "%d:%d:%d", &hStart, &mStart, &sStart)
+
     if err != nil || n != 3 {
         s.logger.Error("Start time is not in the format HH:MM:SS.")
-        return datamanager.CreateShouldSyncReading(false), err
+        return nil, err
     }
     m, err := fmt.Sscanf(s.end, "%d:%d:%d", &hEnd, &mEnd, &sEnd)
     if err != nil || m != 3 {
         s.logger.Error("End time is not in the format HH:MM:SS.")
-        return datamanager.CreateShouldSyncReading(false), err
+        return nil, err
     }
 
     zone, err := time.LoadLocation(s.zone)
@@ -135,14 +136,18 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
     endTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
         hEnd, mEnd, sEnd, 0, zone)
 
+    readings := map[string]interface{}{"should_sync": false}
+    readings["time"] = currentTime
     // If it is between the start and end time, sync.
     if currentTime.After(startTime) && currentTime.Before(endTime) {
-        s.logger.Info("Syncing")
-        return datamanager.CreateShouldSyncReading(true), nil
+        s.logger.Debug("Syncing")
+        readings["should_sync"] = true
+        return readings, nil
     }
 
     // Otherwise, do not sync.
-    return datamanager.CreateShouldSyncReading(false), nil
+    s.logger.Debug("Not syncing. Current time not in sync window: " + currentTime)
+    return readings, nil
 }
 
 // Close closes the underlying generic.
