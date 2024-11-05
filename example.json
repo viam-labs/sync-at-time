@@ -1,94 +1,89 @@
 {
-  "components": [
-    {
-      "type": "camera",
-      "namespace": "rdk",
-      "attributes": {
-        "video_path": "FDF90FEB-59E5-4FCF-AABD-DA03C4E19BFB"
-      },
-      "depends_on": [],
-      "service_configs": [
-        {
-          "type": "data_manager",
-          "attributes": {
-            "capture_methods": [
-              {
-                "capture_frequency_hz": 0.2,
-                "method": "ReadImage",
-                "additional_params": {
-                  "mime_type": "image/jpeg"
-                }
-              }
-            ]
-          }
-        }
-      ],
-      "name": "webcam",
-      "model": "webcam"
-    },
-    {
-      "attributes": {
-        "start": "14:10:00",
-        "end": "15:35:00",
-        "zone": "CET"
-      },
-      "depends_on": [],
-      "name": "timesensor",
-      "model": "naomi:sync-at-time:timesyncsensor",
-      "type": "sensor",
-      "namespace": "rdk",
-      "service_configs": [
-        {
-          "attributes": {
-            "capture_methods": []
-          },
-          "type": "data_manager"
-        }
-      ]
-    }
-  ],
-  "services": [
-    {
-      "attributes": {
-        "selective_syncer_name": "timesensor",
-        "sync_interval_mins": 0.2,
-        "capture_dir": "",
-        "tags": [],
-        "additional_sync_paths": []
-      },
-      "name": "datamanager",
-      "type": "data_manager",
-      "namespace": "rdk"
-    }
-  ],
-  "agent_config": {
-    "subsystems": {
-      "viam-server": {
-        "release_channel": "stable",
-        "pin_version": "",
-        "pin_url": "",
-        "disable_subsystem": false
-      },
-      "agent-provisioning": {
-        "release_channel": "stable",
-        "pin_version": "",
-        "pin_url": "",
-        "disable_subsystem": false
-      },
-      "viam-agent": {
-        "release_channel": "stable",
-        "pin_version": "",
-        "pin_url": "",
-        "disable_subsystem": false
+    "services": [
+      {
+        "namespace": "rdk",
+        "depends_on": [
+          "timesensor"
+        ],
+        "attributes": {
+          "additional_sync_paths": [],
+          "selective_syncer_name": "timesensor",
+          "sync_interval_mins": 0.2,
+          "capture_dir": "",
+          "tags": []
+        },
+        "name": "datamanager",
+        "type": "data_manager"
       }
-    }
-  },
-  "modules": [
-    {
-      "module_id": "naomi:sync-at-time",
-      "version": "0.0.1",
-      "type": "registry",
-      "name": "naomi_sync-at-time"
-    }
-  ]
-}
+    ],
+    "agent_config": {
+      "subsystems": {
+        "viam-server": {
+          "disable_subsystem": false,
+          "release_channel": "stable",
+          "pin_version": "",
+          "pin_url": ""
+        },
+        "agent-provisioning": {
+          "pin_version": "",
+          "pin_url": "",
+          "disable_subsystem": false,
+          "release_channel": "stable"
+        },
+        "viam-agent": {
+          "release_channel": "stable",
+          "pin_version": "",
+          "pin_url": "",
+          "disable_subsystem": false
+        }
+      }
+    },
+    "modules": [
+      {
+        "version": "latest",
+        "type": "registry",
+        "name": "naomi_sync-at-time",
+        "module_id": "naomi:sync-at-time"
+      }
+    ],
+    "components": [
+      {
+        "model": "webcam",
+        "type": "camera",
+        "namespace": "rdk",
+        "attributes": {
+          "video_path": "FDF90FEB-59E5-4FCF-AABD-DA03C4E19BFB"
+        },
+        "depends_on": [],
+        "service_configs": [
+          {
+            "attributes": {
+              "capture_methods": [
+                {
+                  "additional_params": {
+                    "mime_type": "image/jpeg"
+                  },
+                  "capture_frequency_hz": 0.2,
+                  "method": "ReadImage"
+                }
+              ]
+            },
+            "type": "data_manager"
+          }
+        ],
+        "name": "webcam"
+      },
+      {
+        "depends_on": [],
+        "name": "timesensor",
+        "model": "naomi:sync-at-time:timesyncsensor",
+        "type": "sensor",
+        "namespace": "rdk",
+        "attributes": {
+          "start": "18:29:00",
+          "end": "18:30:00",
+          "zone": "CET"
+        }
+      }
+    ]
+  }
