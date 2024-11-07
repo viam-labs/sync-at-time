@@ -10,7 +10,6 @@ import (
     "go.viam.com/rdk/components/sensor"
     "go.viam.com/rdk/logging"
     "go.viam.com/rdk/resource"
-    "go.viam.com/rdk/services/datamanager"
 
     "go.viam.com/utils"
 )
@@ -146,7 +145,7 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
     }
 
     // Otherwise, do not sync.
-    s.logger.Debug("Not syncing. Current time not in sync window: " + currentTime)
+    s.logger.Debug("Not syncing. Current time not in sync window: " + currentTime.String())
     return readings, nil
 }
 
