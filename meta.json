@@ -6,11 +6,13 @@
   "models": [
     {
       "api": "rdk:component:sensor",
-      "model": "naomi:sync-at-time:timesyncsensor"
+      "model": "naomi:sync-at-time:timesyncsensor",
+      "short_description": "This model allows you to trigger cloud sync only during a configured time frame.",
+      "markdown_link": "README.md#configure-your-sync-at-time-sensor"
     }
   ],
   "entrypoint": "syncattime",
-  "markdown_link": "https://github.com/viam-labs/sync-at-time/blob/main/README.md",
+  "markdown_link": "README.md",
   "build": {
     "build": "make module.tar.gz",
     "arch" : ["linux/amd64", "linux/arm64", "darwin/arm64"]
