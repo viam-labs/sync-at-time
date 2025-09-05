@@ -1,4 +1,4 @@
-module sync-at-time-2
+module sync-at-time
 
 go 1.23.8
 

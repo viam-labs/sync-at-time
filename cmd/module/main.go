@@ -1,7 +1,7 @@
 package main
 
 import (
-	timesyncsensor "sync-at-time-2"
+	timesyncsensor "sync-at-time"
 	"go.viam.com/rdk/module"
 	"go.viam.com/rdk/resource"
 	sensor "go.viam.com/rdk/components/sensor"
