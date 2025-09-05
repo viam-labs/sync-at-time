@@ -11,7 +11,7 @@
       "markdown_link": "README.md#configure-your-sync-at-time-sensor"
     }
   ],
-  "entrypoint": "sync-at-time",
+  "entrypoint": "bin/sync-at-time",
   "markdown_link": "README.md",
   "build": {
     "build": "make module.tar.gz",
