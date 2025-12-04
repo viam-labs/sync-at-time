@@ -116,6 +116,7 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
     zone, err := time.LoadLocation(s.zone)
     if err != nil {
         s.logger.Error("Time zone cannot be loaded: ", s.zone)
+		return nil, err
     }
 
     startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
@@ -123,9 +124,17 @@ func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[stri
     endTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
         hEnd, mEnd, sEnd, 0, zone)
 
+    // Handle time windows that span midnight (e.g., 23:00 to 01:00)
+    // If end time is earlier than or equal to start time, the window spans midnight
+    if endTime.Before(startTime) || endTime.Equal(startTime) {
+        // Add 24 hours to endTime to account for midnight crossover
+        endTime = endTime.Add(24 * time.Hour)
+    }
+	
     readings := map[string]interface{}{"should_sync": false}
     readings["time"] = currentTime.String()
-    // If it is between the start and end time, sync.
+
+	// Check if current time is within the sync window
     if currentTime.After(startTime) && currentTime.Before(endTime) {
         s.logger.Debug("Syncing")
         readings["should_sync"] = true
