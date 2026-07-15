@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"sync-at-time"
+	timesyncsensor "sync-at-time"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
 	sensor "go.viam.com/rdk/components/sensor"
@@ -22,9 +22,9 @@ func realMain() error {
 	deps := resource.Dependencies{}
 	// can load these from a remote machine if you need
 
-	cfg := syncattime.Config{}
+	cfg := timesyncsensor.Config{}
 
-	thing, err := syncattime.NewTimesyncsensor(ctx, deps, sensor.Named("foo"), &cfg, logger)
+	thing, err := timesyncsensor.NewTimeSyncSensor(ctx, deps, sensor.Named("foo"), &cfg, logger)
 	if err != nil {
 		return err
 	}

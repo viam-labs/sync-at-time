@@ -150,6 +150,10 @@ func (s *timeSyncer) DoCommand(ctx context.Context, cmd map[string]interface{}) 
 	return nil, fmt.Errorf("not implemented")
 }
 
+func (s *timeSyncer) Status(ctx context.Context) (map[string]interface{}, error) {
+	return map[string]interface{}{}, nil
+}
+
 func (s *timeSyncer) Close(context.Context) error {
 	// Put close code here
 	s.cancelFunc()
