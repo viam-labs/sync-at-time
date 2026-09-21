@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	timesyncsensor "sync-at-time"
+	sensor "go.viam.com/rdk/components/sensor"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
-	sensor "go.viam.com/rdk/components/sensor"
+	timesyncsensor "sync-at-time"
 )
 
 func main() {

@@ -26,9 +26,9 @@ func init() {
 }
 
 type Config struct {
-    Start   string `json:"start"`
-    End     string `json:"end"`
-    Zone    string `json:"zone"`
+	Start string `json:"start"`
+	End   string `json:"end"`
+	Zone  string `json:"zone"`
 }
 
 // Validate ensures all parts of the config are valid and important fields exist.
@@ -36,28 +36,28 @@ type Config struct {
 // The path is the JSON path in your robot's config (not the `Config` struct) to the
 // resource being validated; e.g. "components.0".
 func (cfg *Config) Validate(path string) ([]string, []string, error) {
-    if cfg.Start == "" {
-        return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "start")
-    }
+	if cfg.Start == "" {
+		return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "start")
+	}
 
-    if cfg.End == "" {
-        return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "end")
-    }
+	if cfg.End == "" {
+		return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "end")
+	}
 
-    if cfg.Zone == "" {
-        return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "zone")
-    }
+	if cfg.Zone == "" {
+		return nil, nil, utils.NewConfigValidationFieldRequiredError(path, "zone")
+	}
 
-    return []string{}, []string{}, nil
+	return []string{}, []string{}, nil
 }
 
 type timeSyncer struct {
 	resource.AlwaysRebuild
 
-	name resource.Name
-    start      string
-    end        string
-    zone       string
+	name  resource.Name
+	start string
+	end   string
+	zone  string
 
 	logger logging.Logger
 	cfg    *Config
@@ -99,51 +99,51 @@ func (s *timeSyncer) Name() resource.Name {
 }
 
 func (s *timeSyncer) Readings(context.Context, map[string]interface{}) (map[string]interface{}, error) {
-    currentTime := time.Now()
-    var hStart, mStart, sStart, hEnd, mEnd, sEnd int
-    n, err := fmt.Sscanf(s.start, "%d:%d:%d", &hStart, &mStart, &sStart)
+	currentTime := time.Now()
+	var hStart, mStart, sStart, hEnd, mEnd, sEnd int
+	n, err := fmt.Sscanf(s.start, "%d:%d:%d", &hStart, &mStart, &sStart)
 
-    if err != nil || n != 3 {
-        s.logger.Error("Start time is not in the format HH:MM:SS.")
-        return nil, err
-    }
-    m, err := fmt.Sscanf(s.end, "%d:%d:%d", &hEnd, &mEnd, &sEnd)
-    if err != nil || m != 3 {
-        s.logger.Error("End time is not in the format HH:MM:SS.")
-        return nil, err
-    }
-
-    zone, err := time.LoadLocation(s.zone)
-    if err != nil {
-        s.logger.Error("Time zone cannot be loaded: ", s.zone)
+	if err != nil || n != 3 {
+		s.logger.Error("Start time is not in the format HH:MM:SS.")
 		return nil, err
-    }
+	}
+	m, err := fmt.Sscanf(s.end, "%d:%d:%d", &hEnd, &mEnd, &sEnd)
+	if err != nil || m != 3 {
+		s.logger.Error("End time is not in the format HH:MM:SS.")
+		return nil, err
+	}
 
-    startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
-        hStart, mStart, sStart, 0, zone)
-    endTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
-        hEnd, mEnd, sEnd, 0, zone)
+	zone, err := time.LoadLocation(s.zone)
+	if err != nil {
+		s.logger.Error("Time zone cannot be loaded: ", s.zone)
+		return nil, err
+	}
 
-    // Handle time windows that span midnight (e.g., 23:00 to 01:00)
-    // If end time is earlier than or equal to start time, the window spans midnight
-    if endTime.Before(startTime) || endTime.Equal(startTime) {
-        // Add 24 hours to endTime to account for midnight crossover
-        endTime = endTime.Add(24 * time.Hour)
-    }
-	
-    readings := map[string]interface{}{"should_sync": false}
-    readings["time"] = currentTime.String()
+	startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
+		hStart, mStart, sStart, 0, zone)
+	endTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
+		hEnd, mEnd, sEnd, 0, zone)
+
+	// Handle time windows that span midnight (e.g., 23:00 to 01:00)
+	// If end time is earlier than or equal to start time, the window spans midnight
+	if endTime.Before(startTime) || endTime.Equal(startTime) {
+		// Add 24 hours to endTime to account for midnight crossover
+		endTime = endTime.Add(24 * time.Hour)
+	}
+
+	readings := map[string]interface{}{"should_sync": false}
+	readings["time"] = currentTime.String()
 
 	// Check if current time is within the sync window
-    if currentTime.After(startTime) && currentTime.Before(endTime) {
-        s.logger.Debug("Syncing")
-        readings["should_sync"] = true
-        return readings, nil
-    }
+	if currentTime.After(startTime) && currentTime.Before(endTime) {
+		s.logger.Debug("Syncing")
+		readings["should_sync"] = true
+		return readings, nil
+	}
 
-    // Otherwise, do not sync.
-    s.logger.Debug("Not syncing. Current time not in sync window: " + currentTime.String())
-    return readings, nil
+	// Otherwise, do not sync.
+	s.logger.Debug("Not syncing. Current time not in sync window: " + currentTime.String())
+	return readings, nil
 }
 
 func (s *timeSyncer) DoCommand(ctx context.Context, cmd map[string]interface{}) (map[string]interface{}, error) {
