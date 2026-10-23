@@ -2,7 +2,6 @@ package timesyncsensor
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
@@ -13,8 +12,7 @@ import (
 )
 
 var (
-	Timesyncsensor   = resource.NewModel("naomi", "sync-at-time", "timesyncsensor")
-	errUnimplemented = errors.New("unimplemented")
+	Timesyncsensor = resource.NewModel("naomi", "sync-at-time", "timesyncsensor")
 )
 
 func init() {
